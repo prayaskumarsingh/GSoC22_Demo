@@ -26,7 +26,7 @@ I could have used software like CMAKE, etc but for simplicty I decided not to.
 ## Descrpition of examples
 ### Example 1 : Hello World
 
-This example takes name of `user` as input in dart as `Pointer<int32>`. Then passes the input to C using dart:ffi, which in turn passes this input to Java in JVM using JNI. Latly, Java code prints a greeting with `name`.
+This example takes name of `user` as input in dart as `Pointer<char>`. Then passes the input to C using dart:ffi, which in turn passes this input to Java in JVM using JNI. Latly, Java code prints a greeting with `name`.
 
 The program also shows flow of control by printing outputs in the terminal.
 
