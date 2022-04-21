@@ -8,7 +8,7 @@ typedef FFISignature = Void Function(Pointer<Utf8>);
 // Dart type definition for calling the C foreign function
 typedef DartSignature = void Function(Pointer<Utf8>);
 
-// Opening dynamic native file
+// Start And Destroy JVM which connect to Java through C using FFI and JNI
 final dylib = DynamicLibrary.open('./libpokemon.dylib');
 
 // Start And Destroy JVM

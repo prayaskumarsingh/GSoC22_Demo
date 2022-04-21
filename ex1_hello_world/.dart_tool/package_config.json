@@ -8,13 +8,13 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "gsoc_demo_ex1_hello",
+      "name": "gsoc_demo_ex1_hello_world",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-04-20T11:16:05.475245Z",
+  "generated": "2022-04-21T13:12:32.527553Z",
   "generator": "pub",
   "generatorVersion": "2.15.1"
 }

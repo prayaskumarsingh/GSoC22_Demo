@@ -1,11 +1,13 @@
 import 'dart:ffi';
 import 'dart:io';
 
+// FFI and Dart Signatures
 typedef GetJavaMemory = Pointer<Int32> Function();
 
+// Opening dynamic native file
 final dylib = DynamicLibrary.open('./libmemory.dylib');
 
-// Start And Destroy JVM C functions
+// Start And Destroy JVM which connect to Java through C using FFI and JNI
 final startJVM =
     dylib.lookupFunction<Void Function(), void Function()>('startJVM');
 final destroyJVM =

@@ -35,18 +35,14 @@ void destroyJVM()
 void sayHello(char *name)
 {
 
-      // Finding function in class File
+      // Finding sayHello function in class File
       jmethodID sayHello =
           (*env)->GetStaticMethodID(env, JavaClass, "sayHello", "(Ljava/lang/String;)V");
 
       // Calling Java Function
       printf("In C: Calling Java function.\n\n");
-
-      // JVM accepts only UTF strings
-      jstring jstrName = (*env)->NewStringUTF(env, name); 
-
-      // Calling Java Function in JVM
-      (*env)->CallStaticVoidMethod(env, JavaClass, sayHello, jstrName);
+      jstring jstrName = (*env)->NewStringUTF(env, name);               // JVM accepts only UTF strings
+      (*env)->CallStaticVoidMethod(env, JavaClass, sayHello, jstrName); // Calling Java Function in JVM
 
       printf("In C: Back in C.\n\n");
 }

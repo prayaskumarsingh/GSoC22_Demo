@@ -58,7 +58,7 @@ int *getJavaMemoryAddress()
       // Feild ID of class
       jfieldID fidBB = (*env)->GetFieldID(env, JavaClass, "buf", "Ljava/nio/ByteBuffer;");
 
-      // Get object bu within the 
+      // Get object buf within the object of Memory Class
       jobject buf = (*env)->GetObjectField(env, Object, fidBB);
 
       // Getting memory address of byte stream

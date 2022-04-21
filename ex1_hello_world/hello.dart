@@ -5,13 +5,13 @@ import 'package:ffi/ffi.dart';
 
 // FFI signature of C function
 typedef sayHelloFFISignature = Void Function(Pointer<Utf8>);
-// Dart type definition for calling the C foreign function
+// Dart signature for calling the C foreign function
 typedef sayHelloDartSignature = void Function(Pointer<Utf8>);
 
 // Opening dynamic native file
 final dylib = DynamicLibrary.open('./libhello.dylib');
 
-// Start And Destroy JVM
+// Start And Destroy JVM which connect to Java through C using FFI and JNI
 final startJVM =
     dylib.lookupFunction<Void Function(), void Function()>('startJVM');
 final destroyJVM =
