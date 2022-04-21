@@ -1,29 +1,45 @@
-import 'dart:ffi' as ffi;
-import 'dart:io' show Platform, Directory;
+import 'dart:ffi';
+import 'dart:io';
 
-import 'package:path/path.dart' as path;
+import 'package:ffi/ffi.dart';
 
-// FFI signature of the sayHello C function
-typedef sayHelloFFISignature = ffi.Void Function();
+// FFI signature of C function
+typedef sayHelloFFISignature = Void Function(Pointer<Utf8>);
 // Dart type definition for calling the C foreign function
-typedef sayHelloDartSignature = void Function();
+typedef sayHelloDartSignature = void Function(Pointer<Utf8>);
+
+// Opening dynamic native file
+final dylib = DynamicLibrary.open('./libhello.dylib');
+
+// Start And Destroy JVM
+final startJVM =
+    dylib.lookupFunction<Void Function(), void Function()>('startJVM');
+final destroyJVM =
+    dylib.lookupFunction<Void Function(), void Function()>('destroyJVM');
+
+// Look up the C function in native file
+final sayHello = dylib
+    .lookupFunction<sayHelloFFISignature, sayHelloDartSignature>('sayHello');
 
 void main() {
-  if (Platform.isMacOS) {
-    print("In Dart: Opening Dynamic Library wrapping Java Functions.");
-    // Open the dynamic library
-    var libraryPath = path.join(Directory.current.path, 'libhello.dylib');
-    final dylib = ffi.DynamicLibrary.open(libraryPath);
-
-    // Look up the C function 'hello_world'
-    final sayHelloDartSignature sayHello = dylib
-        .lookup<ffi.NativeFunction<sayHelloFFISignature>>('sayHello')
-        .asFunction();
-
-    // Call the function
-    print("In Dart: Calling native function wrapping Java class.");
-    sayHello();
-  } else {
+  if (!Platform.isMacOS) {
     print("This demo only runs on MacOS");
+    return;
   }
+
+  print("In Dart: Program Starts.");
+  startJVM();
+
+  // Reading name
+  print("In Dart: Enter your name?");
+  Pointer<Utf8>? name = stdin.readLineSync()!.toNativeUtf8();
+
+  // Call the function
+  print("In Dart: Calling native function wrapping Java.\n");
+  sayHello(name);
+
+  print("In Dart: Back in Dart.");
+
+  destroyJVM();
+  print("Program Over.");
 }

@@ -2,54 +2,51 @@
 #include <stdlib.h>
 #include <jni.h>
 
-int main(int argc, char const *argv[])
-{
-      return 0;
-}
+// JVM Variables
+JavaVM *vm;
+JNIEnv *env;
 
-void sayHello()
+jclass JavaClass;
+
+void startJVM()
 {
       printf("In C: Starting JVM.\n");
 
-      // JVM Variables
-      JavaVM *vm;
-      JNIEnv *env;
-
-      // VM Args
+      // JVM Args
       JavaVMInitArgs vm_args;
       vm_args.version = JNI_VERSION_1_8;
       vm_args.nOptions = 0;
       JavaVMOption options[0];
-      // options[0].optionString = "-Djava.class.path=.";
       vm_args.options = options;
 
       // Starting JVM
       jint res = JNI_CreateJavaVM(&vm, (void **)&env, &vm_args);
-      if (res != JNI_OK)
-      {
-            printf("Can't create Java VM\n");
-            exit(1);
-      }
 
       // Finding Java Class
-      jclass cls = (*env)->FindClass(env, "Hello");
-      if (cls == NULL)
-      {
-            printf("Hello class not found\n");
-            exit(1);
-      }
+      JavaClass = (*env)->FindClass(env, "Hello");
+}
+
+void destroyJVM()
+{
+      printf("In C: Destroying JVM.\n");
+      (*vm)->DestroyJavaVM(vm);
+}
+
+void sayHello(char *name)
+{
 
       // Finding function in class File
-      jmethodID mid =
-          (*env)->GetStaticMethodID(env, cls, "sayHello", "()V");
-      if (mid == NULL)
-      {
-            printf("sayHello() method not found\n");
-            exit(1);
-      }
+      jmethodID sayHello =
+          (*env)->GetStaticMethodID(env, JavaClass, "sayHello", "(Ljava/lang/String;)V");
 
       // Calling Java Function
-      printf("In C: Calling Java function.\n");
-      (*env)->CallStaticVoidMethod(env, cls, mid);
-      return;
+      printf("In C: Calling Java function.\n\n");
+
+      // JVM accepts only UTF strings
+      jstring jstrName = (*env)->NewStringUTF(env, name); 
+
+      // Calling Java Function in JVM
+      (*env)->CallStaticVoidMethod(env, JavaClass, sayHello, jstrName);
+
+      printf("In C: Back in C.\n\n");
 }

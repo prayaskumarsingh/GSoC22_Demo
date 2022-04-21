@@ -1,4 +1,4 @@
-name: gsoc_demo_ex1_hello
+name: gsoc_demo_ex3_common_memory_address
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
