@@ -1,28 +1,23 @@
-import 'dart:ffi' as ffi;
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ffi/ffi.dart';
 
 // FFI signature of the sayHello C function
-typedef FFISignature = ffi.Void Function(ffi.Pointer<Utf8>);
+typedef FFISignature = Void Function(Pointer<Utf8>, Pointer<Utf8>);
 // Dart type definition for calling the C foreign function
-typedef DartSignature = void Function(ffi.Pointer<Utf8>);
+typedef DartSignature = void Function(Pointer<Utf8>, Pointer<Utf8>);
 
-final dylib = ffi.DynamicLibrary.open('./libfavorite.dylib');
+final dylib = DynamicLibrary.open('./libfavorite.dylib');
 
 // Start And Destroy JVM which connect to Java through C using FFI and JNI
 final startJVM =
-    dylib.lookupFunction<ffi.Void Function(), void Function()>('startJVM');
+    dylib.lookupFunction<Void Function(), void Function()>('startJVM');
 final destroyJVM =
-    dylib.lookupFunction<ffi.Void Function(), void Function()>('destroyJVM');
+    dylib.lookupFunction<Void Function(), void Function()>('destroyJVM');
 
 // Change Favorite Functions which connect to Java through C using FFI and JNI
-final changeColor =
-    dylib.lookupFunction<FFISignature, DartSignature>('changeColor');
-final changeSong =
-    dylib.lookupFunction<FFISignature, DartSignature>('changeSong');
-final changeMovie =
-    dylib.lookupFunction<FFISignature, DartSignature>('changeMovie');
+final change = dylib.lookupFunction<FFISignature, DartSignature>('change');
 
 void main() {
   if (!Platform.isMacOS) {
@@ -33,26 +28,31 @@ void main() {
   startJVM();
 
   bool flag = false;
-  while (!flag) {
+  while (true) {
     print("Change your favorite:   1.color   2.song   3.movie   4:exit");
     String? choice = stdin.readLineSync();
 
-    print("Your new favorite is : ");
-    ffi.Pointer<Utf8> newFav = stdin.readLineSync()!.toNativeUtf8();
-
+    Pointer<Utf8> feild = "".toNativeUtf8();
     switch (int.parse(choice!)) {
       case 1:
-        changeColor(newFav);
+        feild = "color".toNativeUtf8();
         break;
       case 2:
-        changeSong(newFav);
+        feild = "song".toNativeUtf8();
         break;
       case 3:
-        changeMovie(newFav);
+        feild = "movie".toNativeUtf8();
         break;
       default:
         flag = true;
     }
+
+    if (flag) break;
+
+    print("Your new favorite is : ");
+    Pointer<Utf8> newFav = stdin.readLineSync()!.toNativeUtf8();
+
+    change(newFav, feild);
   }
 
   print("\nProgram Over.");

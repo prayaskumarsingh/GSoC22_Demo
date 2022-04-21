@@ -32,6 +32,7 @@ void main() {
   print("My Pokemen before evolution: " + myPokemon.toDartString());
 
   evolve(myPokemon); // calls native funtion which calls java function
+
   print("My Pokemen after evolution: " + myPokemon.toDartString());
 
   destroyJVM();
