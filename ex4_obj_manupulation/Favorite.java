@@ -1,7 +1,7 @@
 public class Favorite {
-      public String color = "";
-      public String song = "";
-      public String movie = "";
+      public String color = "red";
+      public String song = "Let It Be";
+      public String movie = "Matrix";
 
       public void show() {
             System.out.println("My Favorite color is " + this.color);

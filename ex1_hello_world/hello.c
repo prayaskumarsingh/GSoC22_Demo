@@ -34,7 +34,6 @@ void destroyJVM()
 
 void sayHello(char *name)
 {
-
       // Finding sayHello function in class File
       jmethodID sayHello =
           (*env)->GetStaticMethodID(env, JavaClass, "sayHello", "(Ljava/lang/String;)V");

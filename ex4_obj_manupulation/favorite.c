@@ -44,36 +44,18 @@ void destroyJVM()
       (*vm)->DestroyJavaVM(vm);
 }
 
-void changeColor(const char *newFav)
+void change(const char *newFav, const char *feild)
 {
       // Get Java Class Feild ID
-      jfieldID fidColor = (*env)->GetFieldID(env, JavaClass, "color", "Ljava/lang/String;");
-
+      jfieldID fid = (*env)->GetFieldID(env, JavaClass, feild, "Ljava/lang/String;");
+      
       // Create a new C-string and assign to the JNI string
-      jstring color = (*env)->NewStringUTF(env, newFav);
+      jstring jnewFav = (*env)->NewStringUTF(env, newFav);
 
       // modify the instance variables
-      (*env)->SetObjectField(env, Object, fidColor, color);
+      (*env)->SetObjectField(env, Object, fid, jnewFav);
 
       // Calling Java Method
-      (*env)->CallVoidMethod(env, Object, show);
-      return;
-}
-
-void changeSong(char *newFav)
-{
-      jfieldID fidSong = (*env)->GetFieldID(env, JavaClass, "song", "Ljava/lang/String;");
-      jstring song = (*env)->NewStringUTF(env, newFav);
-      (*env)->SetObjectField(env, Object, fidSong, song);
-      (*env)->CallVoidMethod(env, Object, show);
-      return;
-}
-
-void changeMovie(char *newFav)
-{
-      jfieldID fidMovie = (*env)->GetFieldID(env, JavaClass, "movie", "Ljava/lang/String;");
-      jstring movie = (*env)->NewStringUTF(env, newFav);
-      (*env)->SetObjectField(env, Object, fidMovie, movie);
       (*env)->CallVoidMethod(env, Object, show);
       return;
 }
