@@ -54,4 +54,4 @@ Thing to note is flow of data is only a pointer up to Dart. No data comes out of
   
 This example creates a object of class `Favorite` in Java which holds information like your favorite color, song and movie. The main control of program is always in Dart. The Dart program asks for your new favorite as  and updates the `Favorite` object using interface created using C functions.
 
-The thing to note is control of program is always with dart and no `Favorite` Class has no methods.
+The thing to note is control of program is always with dart and `Favorite` Class has no methods.
