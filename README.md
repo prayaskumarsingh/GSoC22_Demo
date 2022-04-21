@@ -49,7 +49,7 @@ Thing to note is flow of data is only a pointer up to Dart. No data comes out of
 
 ---
   
-### Example 4 : Java Object Manupulation
+### Example 4 : Java Object Manupulation by Dart Code
   
 This example creates a `Favorite` object in Java which holds information like your favorite color, favorite song and favorite movie. The main control of program is always in Dart. The Dart program can take your new favorite as a `Pointer<Char>` input and updates the `Favorite` object using interface created between using C functions.
 
