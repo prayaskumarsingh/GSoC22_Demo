@@ -1,7 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 
-import 'package:ffi/dart';
+import 'package:ffi/ffi.dart';
 
 // FFI signature of C function
 typedef sayHelloFFISignature = Void Function(Pointer<Utf8>);
