@@ -1,7 +1,7 @@
 # GSoC'22 Demo
 This repo contains proof of concept spaghetti code for Dart interop Java with C as intermediate interface and using JNI and dart:fii. This is made for GSoC '22 by Prayas Kumar Singh, a student at BITS Pilani, Goa Campus, India.
 
-Click on the image below to get a video demo of the projects.
+Click on the [here](https://www.youtube.com/watch?v=cpiZViWvCKM) image below to get a video demo of the projects.
 
 [![Video Demo of Project](https://img.youtube.com/vi/cpiZViWvCKM/0.jpg)](https://www.youtube.com/watch?v=cpiZViWvCKM)
 
